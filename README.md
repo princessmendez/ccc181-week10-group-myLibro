@@ -32,7 +32,7 @@ npm run build        # must finish with no errors before you submit
 | Member | Name | GitHub username | CSS file | What I did |
 | --- | --- | --- | --- | --- |
 | 1 (leader) | Princess Beth R. Mendez | princessmendez | `base.css` | I edited src/styles/base.css using a mobile-first approach with CSS Grid and rem units, and added the viewport meta tag to index.html. On phones, the layout is a single column with a full-width .container (1rem side padding) and a centered brand panel with a 1.75rem heading and hidden perks list. At 768px and up, the container padding grows to 2rem and the brand panel gets more padding. At 1024px and up, the layout becomes two equal columns (brand panel left, login card right), the heading grows to 2.5rem, and the perks list appears. At 1280px and up, .container stops at max-width: 1200px and is centered. |
-| 2 | Jonathan S. Geronimo Jr.|Jansoiiiey | `nav.css` | I edited src/styles/nav.css. On phones, the navbar uses Flexbox in a column with the brand on top and links stacked, all at least 48px tall with :hover and :focus-visible styles (--navy-hover and a gold outline), while the footer uses CSS Grid in one column with gold titles and 48px links. At 768px and up, the navbar becomes a row with the brand on the left and links on the right, and .nav-list lines up in one row. At 1024px and up, .footer-grid becomes three equal columns. Nothing changes at 1280px since .container (Member 1) handles centering. |
+| 2 | Jonathan S. Geronimo Jr.| Jansoiiiey | `nav.css` | I edited src/styles/nav.css. On phones, the navbar uses Flexbox in a column with the brand on top and links stacked, all at least 48px tall with :hover and :focus-visible styles (--navy-hover and a gold outline), while the footer uses CSS Grid in one column with gold titles and 48px links. At 768px and up, the navbar becomes a row with the brand on the left and links on the right, and .nav-list lines up in one row. At 1024px and up, .footer-grid becomes three equal columns. Nothing changes at 1280px since .container (Member 1) handles centering. |
 | 3 | Nicanor Gabriel S. Damalerio | nicanorgabrieldamalerio-debug | `form.css` | I edited src/styles/form.css, using Flexbox to style the login card, fields, and buttons. On phones, the card is full width with a single column, 48px inputs, and full-width buttons with :hover and :focus-visible styles. At 768px and up, the card is centered with a 32rem max width and the alternative buttons sit side by side. At 1024px and up, padding and title size increase, and 1280px needs no new rules because .container (Member 1) handles centering. |
 
 ## Experiment 0: the page without the viewport tag
@@ -73,3 +73,56 @@ Screenshots are in `screenshots/` as `360.png`, `768.png`, `1024.png`, `1280.png
 ## What our group learned (leader writes this last)
 
 > Our group learned that designing for phones first makes responsive CSS simpler. We wrote the phone layout with no media query, then used only min-width queries at 768px, 1024px, and 1280px to add complexity as the screen grew. This was easier than shrinking a desktop layout down, because each breakpoint only added or adjusted rules instead of undoing them. We also learned how much the viewport meta tag matters. Without it, the phone view looked like a tiny zoomed-out desktop page and our media queries did not match the real 360px width. Adding it made the page readable and made the breakpoints work as expected.Splitting the CSS into three files (base.css, nav.css, form.css) taught us how layout responsibility can be shared. Member 1’s .container handled the max-width and centering at 1280px, so Members 2 and 3 did not need extra rules there. Using Flexbox for the navbar and form and CSS Grid for the page and footer layouts showed us that each tool fits different jobs. Using rem units and 48px minimum touch targets also helped keep the page readable and easy to tap on a phone. On the teamwork side, we practiced working in one GitHub repository with each member editing only their own file and filling in their own README row in their own commit. This kept us from overwriting each other’s work and gave us clear commit history. The main challenge was coordinating so our separate files still worked together, which we solved by testing at 360px, 768px, 1024px, and 1280px in DevTools.
+
+
+## How to run?
+
+backend
+> # Part 2: Express backend login
+
+## How to run
+
+You need two terminals open at the same time.
+
+**Terminal 1: backend (folder `server`)**
+
+```bash
+cd server
+npm install
+copy .env.example .env
+npm start
+```
+
+You should see `API running on http://localhost:3000`.
+
+**Terminal 2: front end (project root)**
+
+```bash
+npm install
+copy .env.example .env
+npm run dev
+```
+
+Open http://localhost:5173. The health check is http://localhost:3000/api/v1/health and must return `{"status":"ok"}`.
+
+The real `.env` files are never committed. Only the two `.env.example` files (with fake values) are in the repo.
+
+## API summary
+
+| Method | Path | Success | Errors |
+|---|---|---|---|
+| GET | `/api/v1/health` | 200 `{"status":"ok"}` | none |
+| POST | `/api/v1/sessions` | 200 `{token, user}` | 400 missing fields, 401 `Invalid email or password.` |
+| GET | `/api/v1/users/me` | 200 user (needs `Authorization: Bearer <token>`) | 401 `Not logged in.` |
+
+Other answers: unknown route is 404 `{"error":"Not found."}`, a crash is 500 `{"error":"Something went wrong."}`. Full details are in `docs/API-SPEC.md`. The Postman collection is in `docs/postman/CampusConnect.postman_collection.json`.
+
+**Demo account:** `student@campusconnect.test` / `Campus26` (name: Demo Student)
+
+## Who did what (Part 2)
+
+| Member | Name | GitHub | What I did in Part 2 |
+|---|---|---|---|
+| 1 | | | |
+| 2 | Jonathan S. Geronimo | Jansoiiiey |Built `GET /api/v1/users/me` with the token middleware, the 404 and 500 handlers, `docs/API-SPEC.md` (with the events design), the Postman collection and the Postman screenshots. Reviewed the Member 1 pull request. |
+| 3 | | | |
