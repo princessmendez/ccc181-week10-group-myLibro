@@ -20,8 +20,8 @@ const users = [
   {
     id: 2,
     name: "2nd Demo Student",
-    email: "gervy1234@gmail.com",
-    passwordHash: bcrypt.hashSync("gervy1234", 10),
+    email: "nicanor1234@gmail.com",
+    passwordHash: bcrypt.hashSync("nicanor1234", 10),
   },
 ];
 
